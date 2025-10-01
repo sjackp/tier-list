@@ -27,7 +27,7 @@ function App() {
 
   // Fetch available years on mount
   useEffect(() => {
-    fetch('/years')
+    fetch('https://guyj-tier-backend.onrender.com/years')
       .then(res => res.json())
       .then(data => setYears(data))
       .catch(() => setYears([]));
@@ -36,7 +36,7 @@ function App() {
   // Fetch tracks when selectedYear changes
   useEffect(() => {
     const q = selectedYear === 'all' ? '' : `?year=${selectedYear}`;
-    fetch(`/tracks${q}`)
+    fetch(`https://guyj-tier-backend.onrender.com/tracks${q}`)
       .then(res => res.json())
     .then((rows: any[]) => {
       setTiersData(prev => {
