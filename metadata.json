@@ -1,0 +1,5 @@
+{
+  "name": "GuyJ ID Tier List",
+  "description": "A simple, interactive tier list application to rank Guy J tracks. Users can drag and drop track titles from an unranked pool into different tiers (S, A, B, C, D).",
+  "requestFramePermissions": []
+}

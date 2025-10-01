@@ -1,0 +1,8 @@
+name = "guyj-tier-worker"
+main = "worker/index.js"
+compatibility_date = "2025-10-01"
+
+[vars]
+BACKEND_URL = "https://your-backend.example.com"
+
+
