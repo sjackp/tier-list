@@ -44,23 +44,16 @@ function App() {
         const fetchedItems = rows.map(r => ({ id: String(r.id), content: r.content, link: r.link || null, notes: r.notes || null, year: r.year || null }));
         const fetchedIds = new Set(fetchedItems.map(i => i.id));
 
-        // Ensure ranked tiers only contain items that exist in the DB and remove duplicates across tiers.
-        const seen = new Set<string>();
+        // Preserve all existing tier placements - don't touch ranked tiers at all
+        // Only update unranked with new items that aren't already placed anywhere
+        const allPlacedIds = new Set<string>();
         Object.keys(TIERS).forEach(tid => {
           const tierKey = tid as TierId;
-          const prevItems = newData[tierKey] || [];
-          const filtered: typeof prevItems = [];
-          prevItems.forEach(it => {
-            if (fetchedIds.has(it.id) && !seen.has(it.id)) {
-              filtered.push(it);
-              seen.add(it.id);
-            }
-          });
-          newData[tierKey] = filtered;
+          (newData[tierKey] || []).forEach(item => allPlacedIds.add(item.id));
         });
 
-        // Any fetched item not already placed becomes unranked
-        newData.unranked = fetchedItems.filter(i => !seen.has(i.id));
+        // Only add fetched items to unranked if they're not already placed in any tier
+        newData.unranked = fetchedItems.filter(i => !allPlacedIds.has(i.id));
         return newData;
       });
     })
